@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using paymentAPI.Models;
+
 namespace paymentAPI
 {
     public class Program
@@ -14,9 +17,14 @@ namespace paymentAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDbContext<PaymentDetailContext>(options =>
+              options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+
             var app = builder.Build();
 
+
             // Configure the HTTP request pipeline.
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
