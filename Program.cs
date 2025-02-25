@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using paymentAPI.Models;
 
 namespace paymentAPI
@@ -31,6 +32,11 @@ namespace paymentAPI
                 app.UseSwaggerUI();
             }
 
+            app.UseCors(Options =>
+            Options.WithOrigins("http://localhost:64746")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            );
             app.UseAuthorization();
 
 
