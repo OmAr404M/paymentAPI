@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using paymentAPI.Models;
@@ -18,7 +19,13 @@ namespace paymentAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<PaymentDetailContext>(options =>
+            //Services from Identity Core.
+            builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
+            /*
+            builder.Services.AddDbContext<AppDbContext>(option=>
+            option.UseSqlServer());*/
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
               options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
 
             var app = builder.Build();
@@ -33,13 +40,13 @@ namespace paymentAPI
             }
 
             app.UseCors(Options =>
-            Options.WithOrigins("http://localhost:64746")
+            Options.WithOrigins("http://localhost:4200")
             .AllowAnyMethod()
             .AllowAnyHeader()
             );
             app.UseAuthorization();
 
-
+            app.MapIdentityApi<IdentityUser>();
             app.MapControllers();
 
             app.Run();

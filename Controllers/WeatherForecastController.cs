@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using paymentAPI.Models;
 
 namespace paymentAPI.Controllers
 {
@@ -13,7 +14,7 @@ namespace paymentAPI.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger , AppDbContext appDbContext)
         {
             _logger = logger;
         }

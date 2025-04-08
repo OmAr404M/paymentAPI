@@ -13,9 +13,9 @@ namespace paymentAPI.Controllers
     [ApiController]
     public class PymentDetailController : ControllerBase
     {
-        private readonly PaymentDetailContext _context;
+        private readonly AppDbContext _context;
 
-        public PymentDetailController(PaymentDetailContext context)
+        public PymentDetailController(AppDbContext context)
         {
             _context = context;
         }
@@ -69,7 +69,7 @@ namespace paymentAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(await _context.PaymentDetails.ToListAsync());
         }
 
         // POST: api/PymentDetail
@@ -84,7 +84,7 @@ namespace paymentAPI.Controllers
             _context.PaymentDetails.Add(pymentDetail);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPymentDetail", new { id = pymentDetail.PaymentDetailId }, pymentDetail);
+            return Ok(await _context.PaymentDetails.ToListAsync());
         }
 
         // DELETE: api/PymentDetail/5
@@ -100,7 +100,7 @@ namespace paymentAPI.Controllers
             _context.PaymentDetails.Remove(pymentDetail);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(await _context.PaymentDetails.ToListAsync());
         }
 
         private bool PymentDetailExists(int id)
